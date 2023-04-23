@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app-deploy
+  labels:
+    name: test-app-deploy
+    app: demo-voting-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: test-app-pod
+      app: demo-voting-app
+  template:
+    metadata:
+      name: test-app-pod
+      labels:
+        name: test-app-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: test-app
+        image: sid2104/dockerhub:firstpush
+        ports:
+        - containerPort: 80
