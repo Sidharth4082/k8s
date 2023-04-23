@@ -1,25 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app-deploy
+  name: redis-leader
   labels:
-    name: test-app-deploy
-    app: demo-voting-app
+    app: redis
+    role: leader
+    tier: backend
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      name: test-app-pod
-      app: demo-voting-app
+      app: redis
   template:
     metadata:
-      name: test-app-pod
       labels:
-        name: test-app-pod
-        app: demo-voting-app
+        app: redis
+        role: leader
+        tier: backend
     spec:
       containers:
-      - name: test-app
-        image: sid2104/dockerhub:firstpush
+      - name: leader
+        image: "docker.io/redis:6.0.5"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
         ports:
-        - containerPort: 80
+        - containerPort: 6379
