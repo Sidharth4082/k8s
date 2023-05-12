@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-leader
+  name: nginx-server
   labels:
-    app: redis
+    app: nginx
     role: leader
     tier: backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: redis
+      app: nginx
   template:
     metadata:
       labels:
-        app: redis
+        app: nginx
         role: leader
         tier: backend
     spec:
       containers:
       - name: leader
-        image: "docker.io/redis:6.0.5"
+        image: "nginx:latest"
         resources:
           requests:
             cpu: 100m
