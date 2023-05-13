@@ -17,3 +17,8 @@ spec:
           image: sid2104/pythonimages:myfirstpush
           ports:
             - containerPort: 5000
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
