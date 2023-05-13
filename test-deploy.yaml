@@ -5,10 +5,16 @@ metadata:
   labels:
     app: python
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: python
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
       labels:
@@ -19,8 +25,10 @@ spec:
         image: sid2104/pythonimages:myfirstpush
         ports:
         - containerPort: 5000
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
