@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-deployment
+  labels:
+    app: python
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: python
@@ -13,12 +15,12 @@ spec:
         app: python
     spec:
       containers:
-        - name: python
-          image: sid2104/pythonimages:myfirstpush
-          ports:
-            - containerPort: 5000
+      - name: python
+        image: sid2104/pythonimages:myfirstpush
+        ports:
+        - containerPort: 5000
       strategy:
         type: RollingUpdate
         rollingUpdate:
+          maxUnavailable: 1
           maxSurge: 1
-          maxUnavailable: 0
